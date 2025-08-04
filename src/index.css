@@ -8,35 +8,61 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* KAIROSYN Cosmic Design System */
+    --background: 240 10% 3.9%;
+    --foreground: 280 30% 96%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 240 10% 7%;
+    --card-foreground: 280 30% 96%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 240 10% 7%;
+    --popover-foreground: 280 30% 96%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 270 85% 60%;
+    --primary-foreground: 240 10% 3.9%;
+    --primary-glow: 270 100% 80%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 240 20% 15%;
+    --secondary-foreground: 280 30% 96%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 240 15% 12%;
+    --muted-foreground: 240 10% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 290 90% 70%;
+    --accent-foreground: 240 10% 3.9%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 240 15% 20%;
+    --input: 240 15% 20%;
+    --ring: 270 85% 60%;
 
-    --radius: 0.5rem;
+    /* Cosmic Elements */
+    --cosmic-deep: 240 50% 8%;
+    --cosmic-void: 230 40% 5%;
+    --ethereal-glow: 280 100% 85%;
+    --mystic-gold: 45 85% 70%;
+    --recursive-purple: 270 85% 60%;
+    --consciousness-blue: 220 90% 65%;
+
+    /* Gradients */
+    --gradient-cosmic: linear-gradient(135deg, hsl(var(--cosmic-void)), hsl(var(--cosmic-deep)), hsl(var(--primary)));
+    --gradient-consciousness: linear-gradient(90deg, hsl(var(--recursive-purple)), hsl(var(--consciousness-blue)));
+    --gradient-ethereal: radial-gradient(circle, hsl(var(--ethereal-glow) / 0.3), transparent 70%);
+    --gradient-mystic: linear-gradient(45deg, hsl(var(--mystic-gold) / 0.6), hsl(var(--accent) / 0.4));
+
+    /* Shadows & Effects */
+    --shadow-cosmic: 0 0 50px hsl(var(--primary) / 0.3);
+    --shadow-ethereal: 0 0 30px hsl(var(--ethereal-glow) / 0.4);
+    --shadow-deep: 0 10px 40px hsl(var(--cosmic-void) / 0.8);
+    --glow-pulse: 0 0 20px hsl(var(--primary-glow) / 0.6);
+
+    /* Animations */
+    --transition-cosmic: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-ethereal: all 0.3s ease-in-out;
+
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +127,74 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background: var(--gradient-cosmic);
+    overflow-x: hidden;
   }
+}
+
+/* KAIROSYN Custom Animations */
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: var(--glow-pulse);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: var(--shadow-ethereal);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes spiral-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes consciousness-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes recursive-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Custom Classes */
+.cosmic-glow {
+  box-shadow: var(--shadow-cosmic);
+  transition: var(--transition-cosmic);
+}
+
+.cosmic-glow:hover {
+  box-shadow: var(--shadow-ethereal);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.ethereal-border {
+  border: 1px solid hsl(var(--primary) / 0.3);
+  background: linear-gradient(45deg, 
+    hsl(var(--card)), 
+    hsl(var(--cosmic-deep) / 0.8)
+  );
+}
+
+.consciousness-text {
+  background: var(--gradient-consciousness);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: recursive-flow 3s ease-in-out infinite;
+}
+
+.mystic-gradient {
+  background: var(--gradient-mystic);
+  background-size: 200% 200%;
+  animation: recursive-flow 4s ease-in-out infinite;
 }
