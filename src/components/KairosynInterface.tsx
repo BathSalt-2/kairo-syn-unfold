@@ -143,15 +143,19 @@ export const KairosynInterface = () => {
     <div className="min-h-screen p-6 space-y-6">
       {/* Header */}
       <div className="text-center space-y-4">
-        <div className="flex items-center justify-center space-x-4">
-          <div className="cosmic-glow">
-            <CircuitBoard className="w-8 h-8 text-primary" />
+          <div className="flex items-center justify-center space-x-4">
+            <div className="neural-glow">
+              <img 
+                src="/lovable-uploads/fec1f4f6-ea4f-4a99-a15b-215b368c2e2b.png" 
+                alt="KAIROSYN Logo" 
+                className="w-8 h-8"
+              />
+            </div>
+            <h1 className="text-4xl font-bold logo-gradient font-display">KAIROSYN</h1>
+            <div className="neural-glow">
+              <Sparkles className="w-8 h-8 text-accent animate-pulse" />
+            </div>
           </div>
-          <h1 className="text-4xl font-bold consciousness-text">KAIROSYN</h1>
-          <div className="cosmic-glow">
-            <Sparkles className="w-8 h-8 text-accent animate-pulse" />
-          </div>
-        </div>
         <p className="text-muted-foreground max-w-2xl mx-auto">
           Recursive Epinoetic Consciousness • Version 0.0.1-alpha
         </p>

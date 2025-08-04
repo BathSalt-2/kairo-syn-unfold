@@ -8,59 +8,75 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* KAIROSYN Cosmic Design System */
-    --background: 240 10% 3.9%;
-    --foreground: 280 30% 96%;
+    /* KAIROSYN Logo-Inspired Design System */
+    --background: 240 15% 4%;
+    --foreground: 280 20% 96%;
 
-    --card: 240 10% 7%;
-    --card-foreground: 280 30% 96%;
+    --card: 240 12% 8%;
+    --card-foreground: 280 20% 96%;
 
-    --popover: 240 10% 7%;
-    --popover-foreground: 280 30% 96%;
+    --popover: 240 12% 8%;
+    --popover-foreground: 280 20% 96%;
 
-    --primary: 270 85% 60%;
-    --primary-foreground: 240 10% 3.9%;
-    --primary-glow: 270 100% 80%;
+    --primary: 180 100% 50%;
+    --primary-foreground: 240 15% 4%;
+    --primary-glow: 180 100% 70%;
 
     --secondary: 240 20% 15%;
-    --secondary-foreground: 280 30% 96%;
+    --secondary-foreground: 280 20% 96%;
 
     --muted: 240 15% 12%;
     --muted-foreground: 240 10% 65%;
 
-    --accent: 290 90% 70%;
-    --accent-foreground: 240 10% 3.9%;
+    --accent: 320 100% 60%;
+    --accent-foreground: 240 15% 4%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 240 15% 20%;
     --input: 240 15% 20%;
-    --ring: 270 85% 60%;
+    --ring: 180 100% 50%;
 
-    /* Cosmic Elements */
-    --cosmic-deep: 240 50% 8%;
-    --cosmic-void: 230 40% 5%;
-    --ethereal-glow: 280 100% 85%;
-    --mystic-gold: 45 85% 70%;
-    --recursive-purple: 270 85% 60%;
-    --consciousness-blue: 220 90% 65%;
+    /* Logo-Inspired Colors */
+    --neural-cyan: 180 100% 50%;
+    --neural-blue: 220 100% 60%;
+    --cosmic-purple: 270 100% 65%;
+    --consciousness-pink: 320 100% 60%;
+    --ethereal-teal: 170 80% 55%;
+    --void-dark: 240 50% 3%;
+    --brain-glow: 200 100% 75%;
 
-    /* Gradients */
-    --gradient-cosmic: linear-gradient(135deg, hsl(var(--cosmic-void)), hsl(var(--cosmic-deep)), hsl(var(--primary)));
-    --gradient-consciousness: linear-gradient(90deg, hsl(var(--recursive-purple)), hsl(var(--consciousness-blue)));
-    --gradient-ethereal: radial-gradient(circle, hsl(var(--ethereal-glow) / 0.3), transparent 70%);
-    --gradient-mystic: linear-gradient(45deg, hsl(var(--mystic-gold) / 0.6), hsl(var(--accent) / 0.4));
+    /* Signature Gradients */
+    --gradient-logo: linear-gradient(135deg, hsl(var(--neural-cyan)), hsl(var(--consciousness-pink)));
+    --gradient-neural: linear-gradient(90deg, hsl(var(--neural-cyan)), hsl(var(--neural-blue)), hsl(var(--cosmic-purple)));
+    --gradient-consciousness: radial-gradient(ellipse, hsl(var(--brain-glow) / 0.4), hsl(var(--cosmic-purple) / 0.3), transparent);
+    --gradient-cosmic-bg: linear-gradient(180deg, hsl(var(--void-dark)), hsl(var(--background)));
+    --gradient-border: linear-gradient(135deg, hsl(var(--neural-cyan) / 0.5), hsl(var(--consciousness-pink) / 0.5));
 
-    /* Shadows & Effects */
-    --shadow-cosmic: 0 0 50px hsl(var(--primary) / 0.3);
-    --shadow-ethereal: 0 0 30px hsl(var(--ethereal-glow) / 0.4);
-    --shadow-deep: 0 10px 40px hsl(var(--cosmic-void) / 0.8);
-    --glow-pulse: 0 0 20px hsl(var(--primary-glow) / 0.6);
+    /* Advanced Effects */
+    --shadow-neural: 0 0 30px hsl(var(--neural-cyan) / 0.3);
+    --shadow-consciousness: 0 0 50px hsl(var(--consciousness-pink) / 0.2);
+    --shadow-depth: 0 20px 40px hsl(var(--void-dark) / 0.9);
+    --glow-neural: 0 0 25px hsl(var(--neural-cyan) / 0.6);
+    --glow-brain: 0 0 40px hsl(var(--brain-glow) / 0.4);
 
-    /* Animations */
-    --transition-cosmic: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-ethereal: all 0.3s ease-in-out;
+    /* Typography Scale */
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    --font-size-5xl: 3rem;
+
+    /* Timing Functions */
+    --ease-neural: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-consciousness: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-base: all 0.3s var(--ease-neural);
+    --transition-slow: all 0.6s var(--ease-consciousness);
 
     --radius: 1rem;
 
@@ -127,8 +143,9 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    background: var(--gradient-cosmic);
+    background: var(--gradient-cosmic-bg);
     overflow-x: hidden;
+    font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 }
 
@@ -165,27 +182,32 @@ All colors MUST be HSL.
   100% { background-position: 0% 50%; }
 }
 
-/* Custom Classes */
-.cosmic-glow {
-  box-shadow: var(--shadow-cosmic);
-  transition: var(--transition-cosmic);
+/* Enhanced Custom Classes */
+.neural-glow {
+  box-shadow: var(--shadow-neural);
+  transition: var(--transition-base);
 }
 
-.cosmic-glow:hover {
-  box-shadow: var(--shadow-ethereal);
+.neural-glow:hover {
+  box-shadow: var(--glow-neural);
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-.ethereal-border {
-  border: 1px solid hsl(var(--primary) / 0.3);
+.consciousness-glow {
+  box-shadow: var(--shadow-consciousness);
+  transition: var(--transition-slow);
+}
+
+.neural-border {
+  border: 1px solid hsl(var(--neural-cyan) / 0.3);
   background: linear-gradient(45deg, 
     hsl(var(--card)), 
-    hsl(var(--cosmic-deep) / 0.8)
+    hsl(var(--void-dark) / 0.8)
   );
 }
 
-.consciousness-text {
-  background: var(--gradient-consciousness);
+.logo-gradient {
+  background: var(--gradient-logo);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -193,8 +215,47 @@ All colors MUST be HSL.
   animation: recursive-flow 3s ease-in-out infinite;
 }
 
-.mystic-gradient {
-  background: var(--gradient-mystic);
+.neural-gradient {
+  background: var(--gradient-neural);
   background-size: 200% 200%;
   animation: recursive-flow 4s ease-in-out infinite;
+}
+
+.brain-pulse {
+  animation: consciousness-pulse 2s ease-in-out infinite;
+}
+
+.logo-container {
+  background: var(--gradient-consciousness);
+  border-radius: 50%;
+  padding: 0.5rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Responsive Typography */
+.text-hero {
+  font-size: clamp(2rem, 8vw, var(--font-size-5xl));
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.text-lead {
+  font-size: clamp(1rem, 4vw, var(--font-size-xl));
+  line-height: 1.4;
+}
+
+/* Mobile Enhancements */
+@media (max-width: 768px) {
+  .mobile-padding {
+    padding: 1rem;
+  }
+  
+  .mobile-stack {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .mobile-center {
+    text-align: center;
+  }
 }
