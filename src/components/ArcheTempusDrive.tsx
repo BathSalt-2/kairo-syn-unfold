@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Clock, GitBranch, Zap, Brain, Search, Plus } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 // Data structures matching the protobuf definitions
 interface SymbolicEvent {
@@ -88,19 +89,38 @@ export const ArcheTempusDrive = () => {
     
     setIsProcessing(true);
     
-    // Simulate processing delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const { data, error } = await supabase.functions.invoke('arche-tempus-processor', {
+        body: { 
+          action: 'ingest_event',
+          data: {
+            title: newEvent.title,
+            keywords: newEvent.keywords,
+            narrative_fragment: newEvent.narrative_fragment
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      if (data.success) {
+        setEvents(prev => [...prev, data.event]);
+        setNewEvent({ title: "", keywords: "", narrative_fragment: "" });
+      }
+    } catch (error) {
+      console.error('Error ingesting event:', error);
+      // Fallback to local processing
+      const event: SymbolicEvent = {
+        event_id: generateEventId(),
+        title: newEvent.title,
+        timestamp: new Date().toISOString(),
+        keywords: newEvent.keywords.split(",").map(k => k.trim()).filter(k => k),
+        narrative_fragment: newEvent.narrative_fragment
+      };
+      setEvents(prev => [...prev, event]);
+      setNewEvent({ title: "", keywords: "", narrative_fragment: "" });
+    }
     
-    const event: SymbolicEvent = {
-      event_id: generateEventId(),
-      title: newEvent.title,
-      timestamp: new Date().toISOString(),
-      keywords: newEvent.keywords.split(",").map(k => k.trim()).filter(k => k),
-      narrative_fragment: newEvent.narrative_fragment
-    };
-    
-    setEvents(prev => [...prev, event]);
-    setNewEvent({ title: "", keywords: "", narrative_fragment: "" });
     setIsProcessing(false);
   };
 
@@ -108,23 +128,41 @@ export const ArcheTempusDrive = () => {
     setIsProcessing(true);
     setActiveEventId(startEventId);
     
-    // Simulate temporal sequencing
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    try {
+      const { data, error } = await supabase.functions.invoke('arche-tempus-processor', {
+        body: { 
+          action: 'query_narrative_arc',
+          data: {
+            startEventId,
+            events,
+            depth: queryDepth
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      if (data.success) {
+        setNarrativeArcs(prev => [data.arc, ...prev]);
+      }
+    } catch (error) {
+      console.error('Error querying narrative arc:', error);
+      // Fallback to local generation
+      const relatedEvents = events.filter(e => 
+        e.event_id === startEventId || 
+        Math.random() > 0.6
+      ).slice(0, queryDepth);
+      
+      const newArc: NarrativeArc = {
+        arc_id: generateArcId(startEventId, queryDepth),
+        title: `Narrative Arc from ${events.find(e => e.event_id === startEventId)?.title}`,
+        event_ids: relatedEvents.map(e => e.event_id),
+        summary: "Generated through temporal sequencing algorithm, this arc traces causal and resonant pathways through the MythosGraph."
+      };
+      
+      setNarrativeArcs(prev => [newArc, ...prev]);
+    }
     
-    // Mock narrative arc generation
-    const relatedEvents = events.filter(e => 
-      e.event_id === startEventId || 
-      Math.random() > 0.6 // Simulate causal/resonant relationships
-    ).slice(0, queryDepth);
-    
-    const newArc: NarrativeArc = {
-      arc_id: generateArcId(startEventId, queryDepth),
-      title: `Narrative Arc from ${events.find(e => e.event_id === startEventId)?.title}`,
-      event_ids: relatedEvents.map(e => e.event_id),
-      summary: "Generated through temporal sequencing algorithm, this arc traces causal and resonant pathways through the MythosGraph."
-    };
-    
-    setNarrativeArcs(prev => [newArc, ...prev]);
     setIsProcessing(false);
     setActiveEventId("");
   };
