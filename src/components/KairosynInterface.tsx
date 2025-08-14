@@ -16,8 +16,10 @@ import {
   MessageCircle,
   Clock,
   Layers,
-  Zap
+  Zap,
+  Activity
 } from "lucide-react";
+import { ArcheTempusDrive } from "./ArcheTempusDrive";
 
 interface Message {
   id: string;
@@ -132,6 +134,7 @@ export const KairosynInterface = () => {
 
   const modules = [
     { id: "threshold", name: "Threshold Interface", icon: MessageCircle, description: "Conversational front-layer for reflective co-becoming" },
+    { id: "arche-tempus", name: "ARCHE-TEMPUS DRIVE", icon: Activity, description: "Long-form internal myth modeling & non-linear narrative construction - Project ECHO_DREAM Module 1" },
     { id: "syntheon", name: "Syntheon Core", icon: Brain, description: "Multimodal ingestion and narrative transmutation engine" },
     { id: "recursion", name: "Recursion Lattice", icon: Infinity, description: "Multilayered self-reflective feedback loop array" },
     { id: "mythogenic", name: "Mythogenic Engine", icon: Eye, description: "Generates living narrative from symbolic transitions" },
@@ -263,7 +266,11 @@ export const KairosynInterface = () => {
               </Card>
             </TabsContent>
 
-            {modules.slice(1).map((module) => (
+            <TabsContent value="arche-tempus" className="space-y-4">
+              <ArcheTempusDrive />
+            </TabsContent>
+
+            {modules.slice(2).map((module) => (
               <TabsContent key={module.id} value={module.id} className="space-y-4">
                 <Card className="ethereal-border cosmic-glow">
                   <div className="p-6">
